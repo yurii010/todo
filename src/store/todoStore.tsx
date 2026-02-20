@@ -11,15 +11,18 @@ export type Todo = {
 
 interface TodoState {
     todos: Todo[];
+    dailyGoal: number;
     addTodo: (id: string, title: string, text: string) => void;
     removeTodo: (id: string) => void;
     editTodo: (id: string, title: string, text: string) => void;
     toggleTodo: (id: string) => void;
     setTodos: (todos: Todo[]) => void;
+    setDailyGoal: (goal: number) => void;
 }
 
 const useTodoStore = create<TodoState>((set) => ({
     todos: [],
+    dailyGoal: 3,
 
     addTodo: (id, title, text) =>
         set((state) => ({
@@ -49,12 +52,18 @@ const useTodoStore = create<TodoState>((set) => ({
         set((state) => ({
             todos: state.todos.map((todo) =>
                 todo.id === id
-                    ? { ...todo, isCompleted: !todo.isCompleted, completedAt: !todo.isCompleted ? Date.now() : null }
+                    ? {
+                          ...todo,
+                          isCompleted: !todo.isCompleted,
+                          completedAt: !todo.isCompleted ? Date.now() : null
+                      }
                     : todo
             )
         })),
 
-    setTodos: (todos) => set({ todos })
+    setTodos: (todos) => set({ todos }),
+
+    setDailyGoal: (goal) => set({ dailyGoal: goal })
 }));
 
 export default useTodoStore;

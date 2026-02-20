@@ -4,6 +4,7 @@ import { TodoModal } from '@/components/TodoModal';
 import { Search } from '@/components/Search';
 import { Filter } from '@/components/Filter';
 import { Stats } from '@/components/Stats';
+import { DailyGoal } from '@/components/DailyGoal';
 import { Loader2, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -25,7 +26,9 @@ export function TodoPage() {
         openEditModal,
         openAddModal,
         closeModal,
-        stats
+        stats,
+        dailyProgress,
+        setDailyGoal
     } = useTodos();
 
     const handleSaveTodo = async (title: string, text: string) => {
@@ -74,6 +77,14 @@ export function TodoPage() {
                 </div>
 
                 <Filter filter={filter} onChange={setFilter} />
+
+                <DailyGoal
+                    completedToday={dailyProgress.completedToday}
+                    dailyGoal={dailyProgress.dailyGoal}
+                    progress={dailyProgress.progress}
+                    isGoalReached={dailyProgress.isGoalReached}
+                    onSetGoal={setDailyGoal}
+                />
 
                 <Stats
                     completed={stats.completed}

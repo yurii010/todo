@@ -10,7 +10,8 @@ import {
 type FilterType = 'all' | 'active' | 'completed';
 
 export const useTodos = () => {
-    const { setTodos, addTodo, removeTodo, editTodo, toggleTodo } = useTodoStore();
+    const { setTodos, addTodo, removeTodo, editTodo, toggleTodo, dailyGoal, setDailyGoal } =
+        useTodoStore();
     const todos = useTodoStore(selectTodos);
     const [modalMode, setModalMode] = useState<'add' | 'edit' | null>(null);
     const [editingTodo, setEditingTodo] = useState<Todo | null>(null);
@@ -104,6 +105,21 @@ export const useTodos = () => {
         return { completed, active, productivity };
     }, [todos]);
 
+    const dailyProgress = useMemo(() => {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const todayStart = today.getTime();
+
+        const completedToday = todos.filter((t) => {
+            return t.isCompleted && t.completedAt && t.completedAt >= todayStart;
+        }).length;
+
+        const progress = Math.min((completedToday / dailyGoal) * 100, 100);
+        const isGoalReached = completedToday >= dailyGoal;
+
+        return { completedToday, dailyGoal, progress, isGoalReached };
+    }, [todos, dailyGoal]);
+
     return {
         todos: filteredTodos,
         filter,
@@ -121,6 +137,8 @@ export const useTodos = () => {
         openEditModal,
         openAddModal,
         closeModal,
-        stats
+        stats,
+        dailyProgress,
+        setDailyGoal
     };
 };
