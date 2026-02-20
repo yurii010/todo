@@ -1,14 +1,18 @@
 import { useTodos } from '@/hooks/useTodos';
-import { useSearch } from '@/hooks/useSearch';
 import { TodoCard } from '@/components/TodoCard';
 import { TodoModal } from '@/components/TodoModal';
 import { Search } from '@/components/Search';
+import { Filter } from '@/components/Filter';
 import { Loader2, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export function TodoPage() {
     const {
         todos,
+        filter,
+        setFilter,
+        searchQuery,
+        setSearchQuery,
         modalMode,
         editingTodo,
         isLoading,
@@ -21,8 +25,6 @@ export function TodoPage() {
         openAddModal,
         closeModal
     } = useTodos();
-
-    const { searchQuery, setSearchQuery, filteredItems } = useSearch(todos);
 
     const handleSaveTodo = async (title: string, text: string) => {
         if (modalMode === 'add') {
@@ -69,21 +71,27 @@ export function TodoPage() {
                     </Button>
                 </div>
 
+                <Filter filter={filter} onChange={setFilter} />
+
                 <div className="space-y-3">
                     {isLoading ? (
                         <div className="flex justify-center py-12">
                             <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
                         </div>
-                    ) : filteredItems.length === 0 ? (
+                    ) : todos.length === 0 ? (
                         <div className="rounded-xl border bg-card p-8 text-center text-muted-foreground shadow-sm">
                             {searchQuery ? (
                                 <p>No todos found matching "{searchQuery}"</p>
+                            ) : filter === 'completed' ? (
+                                <p>No completed todos yet</p>
+                            ) : filter === 'active' ? (
+                                <p>No active todos</p>
                             ) : (
                                 <p>No todos yet. Add your first task!</p>
                             )}
                         </div>
                     ) : (
-                        filteredItems.map((todo) => (
+                        todos.map((todo) => (
                             <TodoCard
                                 key={todo.id}
                                 todo={todo}

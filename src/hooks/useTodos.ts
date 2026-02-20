@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import useTodoStore, { selectTodos, type Todo } from '@/store/todoStore';
 import {
     fetchTodosFromDb,
@@ -7,6 +7,8 @@ import {
     deleteTodoFromDb
 } from '@/services/firebase';
 
+type FilterType = 'all' | 'active' | 'completed';
+
 export const useTodos = () => {
     const { setTodos, addTodo, removeTodo, editTodo, toggleTodo } = useTodoStore();
     const todos = useTodoStore(selectTodos);
@@ -14,6 +16,8 @@ export const useTodos = () => {
     const [editingTodo, setEditingTodo] = useState<Todo | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [filter, setFilter] = useState<FilterType>('all');
+    const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
         const getTodos = async () => {
@@ -73,8 +77,28 @@ export const useTodos = () => {
         setModalMode(null);
     };
 
+    const filteredTodos = useMemo(() => {
+        return todos.filter((todo) => {
+            if (filter === 'active' && todo.isCompleted) return false;
+            if (filter === 'completed' && !todo.isCompleted) return false;
+
+            if (searchQuery.trim()) {
+                const query = searchQuery.toLowerCase();
+                const matchesTitle = todo.title.toLowerCase().includes(query);
+                const matchesText = todo.text.toLowerCase().includes(query);
+                if (!matchesTitle && !matchesText) return false;
+            }
+
+            return true;
+        });
+    }, [todos, filter, searchQuery]);
+
     return {
-        todos,
+        todos: filteredTodos,
+        filter,
+        setFilter,
+        searchQuery,
+        setSearchQuery,
         modalMode,
         editingTodo,
         isLoading,
