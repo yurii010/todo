@@ -1,6 +1,6 @@
 # Todo App
 
-A modern todo application built with React, TypeScript, and Firebase.
+A modern todo application with daily goals and productivity tracking. Built with React, TypeScript, and Firebase.
 
 ## 🛠 Tech Stack
 
@@ -57,25 +57,45 @@ npm run dev
 
 ## ✨ Features
 
+### Core
 - ✅ Add, edit, delete todos
 - ✅ Mark todos as complete
 - ✅ Real-time sync with Firebase Firestore
 - ✅ Smooth animations (slide in/out)
 - ✅ Dark mode support
 - ✅ Responsive design (mobile-first)
-- ✅ Loading states
+- ✅ Search & filter (All / Active / Completed)
+
+### Smart Productivity
+- 🎯 **Daily Goal** — Set a daily target (1-10 tasks) and track progress with a visual progress bar
+- 📊 **Stats Dashboard** — View completed, active tasks, and productivity percentage
+- 🏆 **Goal Celebration** — Get a trophy when you reach your daily goal
+- ⚙️ **Customizable Goals** — Adjust your daily target anytime via settings modal
 
 ## 📁 Project Structure
 
 ```
 src/
-├── components/       # UI components (TodoCard, TodoForm, TodoModal)
-├── hooks/           # Custom hooks (useTodos)
-├── pages/           # Page components (TodoPage)
-├── services/        # Firebase service layer
-├── store/           # Zustand store
-├── lib/             # Utilities and Firebase config
-└── index.css        # Global styles and theme
+├── components/       # UI components
+│   ├── TodoCard.tsx
+│   ├── TodoModal.tsx
+│   ├── DailyGoal.tsx      # Daily goal tracker with progress bar
+│   ├── GoalSettingsModal.tsx  # Goal configuration modal
+│   ├── Stats.tsx          # Productivity statistics
+│   ├── Search.tsx
+│   ├── Filter.tsx
+│   └── ui/               # shadcn/ui components
+├── hooks/
+│   └── useTodos.ts       # Main todo logic & state
+├── pages/
+│   └── TodoPage.tsx      # Main page component
+├── services/
+│   └── firebase.ts       # Firebase CRUD operations
+├── store/
+│   └── todoStore.tsx     # Zustand store with dailyGoal state
+├── lib/
+│   └── firebase.ts       # Firebase initialization
+└── index.css             # Global styles and theme
 ```
 
 ## 🔥 Firebase Setup
@@ -92,3 +112,18 @@ src/
 - **Quotes:** Single quotes `'`
 - **Semicolons:** Required `;`
 - **Formatter:** Prettier (auto-formats on save)
+
+## 🎯 How to Use Daily Goal
+
+1. Open the app — you'll see the Daily Goal widget
+2. Default goal is **3 tasks per day**
+3. Complete tasks by clicking the checkbox
+4. Watch the progress bar fill up
+5. Reach your goal to see the 🏆 trophy!
+6. Click ⚙️ to change your goal (1-10 tasks)
+
+## 📊 Stats Explained
+
+- **Completed** — Total number of completed tasks
+- **Active** — Tasks still pending
+- **Productivity** — Percentage of completed vs total tasks
