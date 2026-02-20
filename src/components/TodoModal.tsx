@@ -1,32 +1,36 @@
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import type { Priority } from '@/types/todo';
 
 interface TodoModalProps {
-    todo: { title: string; text: string } | null;
+    todo: { title: string; text: string; priority?: Priority } | null;
     isOpen: boolean;
     onClose: () => void;
-    onSave: (title: string, text: string) => void;
+    onSave: (title: string, text: string, priority: Priority) => void;
     mode: 'add' | 'edit';
 }
 
 export function TodoModal({ todo, isOpen, onClose, onSave, mode }: TodoModalProps) {
     const [title, setTitle] = useState('');
     const [text, setText] = useState('');
+    const [priority, setPriority] = useState<Priority>('medium');
 
     useEffect(() => {
         if (todo) {
             setTitle(todo.title);
             setText(todo.text);
+            setPriority(todo.priority ?? 'medium');
         } else if (mode === 'add') {
             setTitle('');
             setText('');
+            setPriority('medium');
         }
     }, [todo, mode]);
 
     const handleSave = () => {
         if (!title.trim()) return;
-        onSave(title, text);
+        onSave(title, text, priority);
     };
 
     if (!isOpen) return null;
@@ -57,6 +61,41 @@ export function TodoModal({ todo, isOpen, onClose, onSave, mode }: TodoModalProp
                             onChange={(e) => setText(e.target.value)}
                             className="w-full"
                         />
+                    </div>
+
+                    <div>
+                        <label className="text-sm font-medium text-foreground mb-2 block">
+                            Priority
+                        </label>
+                        <div className="flex gap-2">
+                            <Button
+                                type="button"
+                                variant={priority === 'high' ? 'default' : 'outline'}
+                                size="sm"
+                                onClick={() => setPriority('high')}
+                                className="flex-1 bg-red-500 hover:bg-red-600"
+                            >
+                                High
+                            </Button>
+                            <Button
+                                type="button"
+                                variant={priority === 'medium' ? 'default' : 'outline'}
+                                size="sm"
+                                onClick={() => setPriority('medium')}
+                                className="flex-1 bg-yellow-500 hover:bg-yellow-600"
+                            >
+                                Medium
+                            </Button>
+                            <Button
+                                type="button"
+                                variant={priority === 'low' ? 'default' : 'outline'}
+                                size="sm"
+                                onClick={() => setPriority('low')}
+                                className="flex-1 bg-green-500 hover:bg-green-600"
+                            >
+                                Low
+                            </Button>
+                        </div>
                     </div>
                 </div>
 

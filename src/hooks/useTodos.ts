@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
-import useTodoStore, { selectTodos, type Todo } from '@/store/todoStore';
+import useTodoStore, { selectTodos } from '@/store/todoStore';
+import type { Todo, Priority } from '@/types/todo';
 import {
     fetchTodosFromDb,
     createTodoInDb,
@@ -19,6 +20,7 @@ export const useTodos = () => {
     const [error, setError] = useState<string | null>(null);
     const [filter, setFilter] = useState<FilterType>('all');
     const [searchQuery, setSearchQuery] = useState('');
+    const [priorityFilter, setPriorityFilter] = useState<Priority | 'all'>('all');
 
     useEffect(() => {
         const getTodos = async () => {
@@ -37,10 +39,10 @@ export const useTodos = () => {
         getTodos();
     }, [setTodos]);
 
-    const addNewTodo = async (title: string, text: string) => {
+    const addNewTodo = async (title: string, text: string, priority: Priority = 'medium') => {
         if (!title.trim()) return;
-        const id = await createTodoInDb(title, text);
-        addTodo(id, title, text);
+        const id = await createTodoInDb(title, text, priority);
+        addTodo(id, title, text, priority);
     };
 
     const deleteTodo = async (id: string) => {
@@ -48,9 +50,9 @@ export const useTodos = () => {
         removeTodo(id);
     };
 
-    const updateTodo = async (id: string, title: string, text: string) => {
-        await updateTodoInDb(id, { title, text });
-        editTodo(id, title, text);
+    const updateTodo = async (id: string, title: string, text: string, priority: Priority) => {
+        await updateTodoInDb(id, { title, text, priority });
+        editTodo(id, title, text, priority);
     };
 
     const toggleComplete = async (id: string) => {
@@ -84,6 +86,7 @@ export const useTodos = () => {
         return todos.filter((todo) => {
             if (filter === 'active' && todo.isCompleted) return false;
             if (filter === 'completed' && !todo.isCompleted) return false;
+            if (priorityFilter !== 'all' && todo.priority !== priorityFilter) return false;
 
             if (searchQuery.trim()) {
                 const query = searchQuery.toLowerCase();
@@ -94,7 +97,7 @@ export const useTodos = () => {
 
             return true;
         });
-    }, [todos, filter, searchQuery]);
+    }, [todos, filter, searchQuery, priorityFilter]);
 
     const stats = useMemo(() => {
         const completed = todos.filter((t) => t.isCompleted).length;
@@ -126,6 +129,8 @@ export const useTodos = () => {
         setFilter,
         searchQuery,
         setSearchQuery,
+        priorityFilter,
+        setPriorityFilter,
         modalMode,
         editingTodo,
         isLoading,

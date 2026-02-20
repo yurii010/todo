@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Trash2, Edit, Check, Circle } from 'lucide-react';
-import { type Todo } from '@/store/todoStore';
+import type { Todo } from '@/types/todo';
 
 interface TodoCardProps {
     todo: Todo;
@@ -20,13 +20,25 @@ export function TodoCard({ todo, onDelete, onEdit, onToggle }: TodoCardProps) {
         }, 200);
     };
 
+    const priorityColors = {
+        high: 'border-l-red-500',
+        medium: 'border-l-yellow-500',
+        low: 'border-l-green-500'
+    };
+
+    const priorityBadges = {
+        high: 'bg-red-500 text-white',
+        medium: 'bg-yellow-500 text-black',
+        low: 'bg-green-500 text-white'
+    };
+
     return (
         <div
-            className={`rounded-lg border bg-card text-card-foreground p-4 shadow-sm hover:shadow-md transition-all ${isDeleting ? 'animate-slide-out' : 'animate-slide-in'}`}
+            className={`rounded-lg border bg-card text-card-foreground p-4 shadow-sm hover:shadow-md transition-all border-l-4 ${priorityColors[todo.priority]} ${isDeleting ? 'animate-slide-out' : 'animate-slide-in'}`}
         >
             <div className="flex items-start justify-between gap-3">
                 <div className="flex-1 space-y-1 min-w-0">
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 flex-wrap">
                         <Button
                             variant="ghost"
                             size="icon"
@@ -44,6 +56,11 @@ export function TodoCard({ todo, onDelete, onEdit, onToggle }: TodoCardProps) {
                         >
                             {todo.title}
                         </p>
+                        <span
+                            className={`text-xs px-2 py-0.5 rounded-full ${priorityBadges[todo.priority]}`}
+                        >
+                            {todo.priority}
+                        </span>
                     </div>
                     <p
                         className={`text-sm break-words ml-8 ${todo.isCompleted ? 'line-through text-muted-foreground' : 'text-muted-foreground'}`}

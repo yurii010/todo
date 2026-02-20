@@ -1,20 +1,12 @@
 import { create } from 'zustand';
-
-export type Todo = {
-    id: string;
-    title: string;
-    text: string;
-    isCompleted: boolean;
-    createdAt: number;
-    completedAt?: number | null;
-};
+import type { Todo, Priority } from '@/types/todo';
 
 interface TodoState {
     todos: Todo[];
     dailyGoal: number;
-    addTodo: (id: string, title: string, text: string) => void;
+    addTodo: (id: string, title: string, text: string, priority?: Priority) => void;
     removeTodo: (id: string) => void;
-    editTodo: (id: string, title: string, text: string) => void;
+    editTodo: (id: string, title: string, text: string, priority?: Priority) => void;
     toggleTodo: (id: string) => void;
     setTodos: (todos: Todo[]) => void;
     setDailyGoal: (goal: number) => void;
@@ -24,7 +16,7 @@ const useTodoStore = create<TodoState>((set) => ({
     todos: [],
     dailyGoal: 3,
 
-    addTodo: (id, title, text) =>
+    addTodo: (id, title, text, priority = 'medium') =>
         set((state) => ({
             todos: [
                 ...state.todos,
@@ -33,7 +25,8 @@ const useTodoStore = create<TodoState>((set) => ({
                     title,
                     text,
                     isCompleted: false,
-                    createdAt: Date.now()
+                    createdAt: Date.now(),
+                    priority
                 }
             ]
         })),
@@ -43,9 +36,11 @@ const useTodoStore = create<TodoState>((set) => ({
             todos: state.todos.filter((todo) => todo.id !== id)
         })),
 
-    editTodo: (id, title, text) =>
+    editTodo: (id, title, text, priority) =>
         set((state) => ({
-            todos: state.todos.map((todo) => (todo.id === id ? { ...todo, title, text } : todo))
+            todos: state.todos.map((todo) =>
+                todo.id === id ? { ...todo, title, text, priority: priority ?? todo.priority } : todo
+            )
         })),
 
     toggleTodo: (id) =>

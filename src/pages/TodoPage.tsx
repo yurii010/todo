@@ -3,10 +3,12 @@ import { TodoCard } from '@/components/TodoCard';
 import { TodoModal } from '@/components/TodoModal';
 import { Search } from '@/components/Search';
 import { Filter } from '@/components/Filter';
+import { PriorityFilter } from '@/components/PriorityFilter';
 import { Stats } from '@/components/Stats';
 import { DailyGoal } from '@/components/DailyGoal';
 import { Loader2, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import type { Priority } from '@/types/todo';
 
 export function TodoPage() {
     const {
@@ -15,6 +17,8 @@ export function TodoPage() {
         setFilter,
         searchQuery,
         setSearchQuery,
+        priorityFilter,
+        setPriorityFilter,
         modalMode,
         editingTodo,
         isLoading,
@@ -31,11 +35,11 @@ export function TodoPage() {
         setDailyGoal
     } = useTodos();
 
-    const handleSaveTodo = async (title: string, text: string) => {
+    const handleSaveTodo = async (title: string, text: string, priority: Priority) => {
         if (modalMode === 'add') {
-            await addNewTodo(title, text);
+            await addNewTodo(title, text, priority);
         } else if (editingTodo) {
-            await updateTodo(editingTodo.id, title, text);
+            await updateTodo(editingTodo.id, title, text, priority);
         }
         closeModal();
     };
@@ -77,6 +81,11 @@ export function TodoPage() {
                 </div>
 
                 <Filter filter={filter} onChange={setFilter} />
+
+                <PriorityFilter
+                    priorityFilter={priorityFilter}
+                    onChange={setPriorityFilter}
+                />
 
                 <DailyGoal
                     completedToday={dailyProgress.completedToday}

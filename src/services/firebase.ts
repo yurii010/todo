@@ -1,6 +1,6 @@
 import { db } from '@/lib/firebase';
 import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
-import type { Todo } from '@/store/todoStore';
+import type { Priority, Todo } from '@/types/todo';
 
 const TODOS_COLLECTION = import.meta.env.VITE_FIRESTORE_COLLECTION || 'todos';
 
@@ -15,12 +15,13 @@ export async function fetchTodosFromDb(): Promise<Todo[]> {
     );
 }
 
-export async function createTodoInDb(title: string, text: string): Promise<string> {
+export async function createTodoInDb(title: string, text: string, priority: Priority = 'medium'): Promise<string> {
     const docRef = await addDoc(collection(db, TODOS_COLLECTION), {
         title,
         text,
         isCompleted: false,
-        createdAt: Date.now()
+        createdAt: Date.now(),
+        priority
     });
     return docRef.id;
 }
