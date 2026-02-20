@@ -5,6 +5,8 @@ export type Todo = {
     title: string;
     text: string;
     isCompleted: boolean;
+    createdAt: number;
+    completedAt?: number | null;
 };
 
 interface TodoState {
@@ -27,7 +29,8 @@ const useTodoStore = create<TodoState>((set) => ({
                     id,
                     title,
                     text,
-                    isCompleted: false
+                    isCompleted: false,
+                    createdAt: Date.now()
                 }
             ]
         })),
@@ -45,7 +48,9 @@ const useTodoStore = create<TodoState>((set) => ({
     toggleTodo: (id) =>
         set((state) => ({
             todos: state.todos.map((todo) =>
-                todo.id === id ? { ...todo, isCompleted: !todo.isCompleted } : todo
+                todo.id === id
+                    ? { ...todo, isCompleted: !todo.isCompleted, completedAt: !todo.isCompleted ? Date.now() : null }
+                    : todo
             )
         })),
 

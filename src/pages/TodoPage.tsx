@@ -3,6 +3,7 @@ import { TodoCard } from '@/components/TodoCard';
 import { TodoModal } from '@/components/TodoModal';
 import { Search } from '@/components/Search';
 import { Filter } from '@/components/Filter';
+import { Stats } from '@/components/Stats';
 import { Loader2, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -23,7 +24,8 @@ export function TodoPage() {
         toggleComplete,
         openEditModal,
         openAddModal,
-        closeModal
+        closeModal,
+        stats
     } = useTodos();
 
     const handleSaveTodo = async (title: string, text: string) => {
@@ -72,6 +74,12 @@ export function TodoPage() {
                 </div>
 
                 <Filter filter={filter} onChange={setFilter} />
+
+                <Stats
+                    completed={stats.completed}
+                    active={stats.active}
+                    productivity={stats.productivity}
+                />
 
                 <div className="space-y-3">
                     {isLoading ? (

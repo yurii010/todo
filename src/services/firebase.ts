@@ -19,7 +19,8 @@ export async function createTodoInDb(title: string, text: string): Promise<strin
     const docRef = await addDoc(collection(db, TODOS_COLLECTION), {
         title,
         text,
-        isCompleted: false
+        isCompleted: false,
+        createdAt: Date.now()
     });
     return docRef.id;
 }

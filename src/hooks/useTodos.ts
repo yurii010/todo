@@ -56,8 +56,10 @@ export const useTodos = () => {
         const todo = todos.find((t) => t.id === id);
         if (!todo) return;
 
+        const isCompleting = !todo.isCompleted;
         await updateTodoInDb(id, {
-            isCompleted: !todo.isCompleted
+            isCompleted: isCompleting,
+            completedAt: isCompleting ? Date.now() : null
         });
         toggleTodo(id);
     };
@@ -93,6 +95,15 @@ export const useTodos = () => {
         });
     }, [todos, filter, searchQuery]);
 
+    const stats = useMemo(() => {
+        const completed = todos.filter((t) => t.isCompleted).length;
+        const active = todos.filter((t) => !t.isCompleted).length;
+        const total = todos.length;
+        const productivity = total > 0 ? Math.round((completed / total) * 100) : 0;
+
+        return { completed, active, productivity };
+    }, [todos]);
+
     return {
         todos: filteredTodos,
         filter,
@@ -109,6 +120,7 @@ export const useTodos = () => {
         toggleComplete,
         openEditModal,
         openAddModal,
-        closeModal
+        closeModal,
+        stats
     };
 };
