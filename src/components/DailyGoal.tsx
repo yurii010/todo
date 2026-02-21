@@ -41,10 +41,11 @@ export function DailyGoal({
 
                 <div className="relative h-3 w-full overflow-hidden rounded-full bg-muted">
                     <div
-                        className={`absolute left-0 top-0 h-full transition-all duration-500 ${isGoalReached
-                            ? 'bg-gradient-to-r from-yellow-400 to-yellow-500'
-                            : 'bg-gradient-to-r from-blue-500 to-blue-600'
-                            }`}
+                        className={`absolute left-0 top-0 h-full transition-all duration-500 ${
+                            isGoalReached
+                                ? 'bg-gradient-to-r from-yellow-400 to-yellow-500'
+                                : 'bg-gradient-to-r from-blue-500 to-blue-600'
+                        }`}
                         style={{ width: `${progress}%` }}
                     />
                 </div>

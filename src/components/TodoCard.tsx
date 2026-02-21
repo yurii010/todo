@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Button } from '@/components/ui/button';
 import type { TodoCardProps } from '@/types';
+import { Button } from '@/components/ui/button';
 import { Trash2, Edit, Check, Circle } from 'lucide-react';
 import { priorityColors, priorityBadges } from '@/constants';
 
@@ -51,7 +51,11 @@ export function TodoCard({ todo, onDelete, onEdit, onToggle }: TodoCardProps) {
                     </p>
                 </div>
                 <div className="flex gap-1 shrink-0">
-                    <Button variant="ghost" size="icon" onClick={() => onEdit(todo)}>
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => onEdit(todo)}
+                    >
                         <Edit className="h-4 w-4" />
                     </Button>
                     <Button variant="ghost" size="icon" onClick={handleDelete}>

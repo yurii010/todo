@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import useTodoStore, { selectTodos } from '@/store/todoStore';
+import useDailyGoalStore from '@/store/dailyGoalStore';
 import type { Todo, Priority } from '@/types';
 import {
     fetchTodosFromDb,
@@ -11,8 +12,9 @@ import {
 type FilterType = 'all' | 'active' | 'completed';
 
 export const useTodos = () => {
-    const { setTodos, addTodo, removeTodo, editTodo, toggleTodo, dailyGoal, setDailyGoal } =
+    const { setTodos, addTodo, removeTodo, editTodo, toggleTodo } =
         useTodoStore();
+    const { dailyGoal, setDailyGoal } = useDailyGoalStore();
     const todos = useTodoStore(selectTodos);
     const [modalMode, setModalMode] = useState<'add' | 'edit' | null>(null);
     const [editingTodo, setEditingTodo] = useState<Todo | null>(null);
@@ -20,7 +22,9 @@ export const useTodos = () => {
     const [error, setError] = useState<string | null>(null);
     const [filter, setFilter] = useState<FilterType>('all');
     const [searchQuery, setSearchQuery] = useState('');
-    const [priorityFilter, setPriorityFilter] = useState<Priority | 'all'>('all');
+    const [priorityFilter, setPriorityFilter] = useState<Priority | 'all'>(
+        'all'
+    );
 
     useEffect(() => {
         const getTodos = async () => {
@@ -31,7 +35,9 @@ export const useTodos = () => {
                 setTodos(fetchedTodos);
             } catch (err) {
                 console.error('Failed to fetch todos:', err);
-                setError(err instanceof Error ? err.message : 'Failed to load todos');
+                setError(
+                    err instanceof Error ? err.message : 'Failed to load todos'
+                );
             } finally {
                 setIsLoading(false);
             }
@@ -39,7 +45,11 @@ export const useTodos = () => {
         getTodos();
     }, [setTodos]);
 
-    const addNewTodo = async (title: string, text: string, priority: Priority = 'medium') => {
+    const addNewTodo = async (
+        title: string,
+        text: string,
+        priority: Priority = 'medium'
+    ) => {
         if (!title.trim()) return;
         const id = await createTodoInDb(title, text, priority);
         addTodo(id, title, text, priority);
@@ -50,7 +60,12 @@ export const useTodos = () => {
         removeTodo(id);
     };
 
-    const updateTodo = async (id: string, title: string, text: string, priority: Priority) => {
+    const updateTodo = async (
+        id: string,
+        title: string,
+        text: string,
+        priority: Priority
+    ) => {
         await updateTodoInDb(id, { title, text, priority });
         editTodo(id, title, text, priority);
     };
@@ -86,7 +101,8 @@ export const useTodos = () => {
         return todos.filter((todo) => {
             if (filter === 'active' && todo.isCompleted) return false;
             if (filter === 'completed' && !todo.isCompleted) return false;
-            if (priorityFilter !== 'all' && todo.priority !== priorityFilter) return false;
+            if (priorityFilter !== 'all' && todo.priority !== priorityFilter)
+                return false;
 
             if (searchQuery.trim()) {
                 const query = searchQuery.toLowerCase();
@@ -103,7 +119,8 @@ export const useTodos = () => {
         const completed = todos.filter((t) => t.isCompleted).length;
         const active = todos.filter((t) => !t.isCompleted).length;
         const total = todos.length;
-        const productivity = total > 0 ? Math.round((completed / total) * 100) : 0;
+        const productivity =
+            total > 0 ? Math.round((completed / total) * 100) : 0;
 
         return { completed, active, productivity };
     }, [todos]);
@@ -114,7 +131,9 @@ export const useTodos = () => {
         const todayStart = today.getTime();
 
         const completedToday = todos.filter((t) => {
-            return t.isCompleted && t.completedAt && t.completedAt >= todayStart;
+            return (
+                t.isCompleted && t.completedAt && t.completedAt >= todayStart
+            );
         }).length;
 
         const progress = Math.min((completedToday / dailyGoal) * 100, 100);
@@ -125,25 +144,25 @@ export const useTodos = () => {
 
     return {
         todos: filteredTodos,
+        stats,
+        error,
         filter,
-        setFilter,
-        searchQuery,
-        setSearchQuery,
-        priorityFilter,
-        setPriorityFilter,
+        isLoading,
         modalMode,
         editingTodo,
-        isLoading,
-        error,
+        searchQuery,
+        dailyProgress,
+        priorityFilter,
+        setFilter,
         addNewTodo,
         deleteTodo,
         updateTodo,
-        toggleComplete,
-        openEditModal,
-        openAddModal,
         closeModal,
-        stats,
-        dailyProgress,
-        setDailyGoal
+        setDailyGoal,
+        openAddModal,
+        openEditModal,
+        toggleComplete,
+        setSearchQuery,
+        setPriorityFilter
     };
 };

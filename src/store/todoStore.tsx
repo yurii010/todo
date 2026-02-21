@@ -1,20 +1,9 @@
 import { create } from 'zustand';
-import type { Todo, Priority } from '@/types';
-
-interface TodoState {
-    todos: Todo[];
-    dailyGoal: number;
-    addTodo: (id: string, title: string, text: string, priority?: Priority) => void;
-    removeTodo: (id: string) => void;
-    editTodo: (id: string, title: string, text: string, priority?: Priority) => void;
-    toggleTodo: (id: string) => void;
-    setTodos: (todos: Todo[]) => void;
-    setDailyGoal: (goal: number) => void;
-}
+import type { TodoState } from '@/types';
 
 const useTodoStore = create<TodoState>((set) => ({
     todos: [],
-    dailyGoal: 3,
+    setTodos: (todos) => set({ todos }),
 
     addTodo: (id, title, text, priority = 'medium') =>
         set((state) => ({
@@ -39,7 +28,14 @@ const useTodoStore = create<TodoState>((set) => ({
     editTodo: (id, title, text, priority) =>
         set((state) => ({
             todos: state.todos.map((todo) =>
-                todo.id === id ? { ...todo, title, text, priority: priority ?? todo.priority } : todo
+                todo.id === id
+                    ? {
+                          ...todo,
+                          title,
+                          text,
+                          priority: priority ?? todo.priority
+                      }
+                    : todo
             )
         })),
 
@@ -54,11 +50,7 @@ const useTodoStore = create<TodoState>((set) => ({
                       }
                     : todo
             )
-        })),
-
-    setTodos: (todos) => set({ todos }),
-
-    setDailyGoal: (goal) => set({ dailyGoal: goal })
+        }))
 }));
 
 export default useTodoStore;

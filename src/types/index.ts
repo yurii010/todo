@@ -62,3 +62,27 @@ export interface TodoModalProps {
     onSave: (title: string, text: string, priority: Priority) => void;
     mode: 'add' | 'edit';
 }
+
+export interface DailyGoalState {
+    dailyGoal: number;
+    setDailyGoal: (goal: number) => void;
+}
+
+export interface TodoState {
+    todos: Todo[];
+    setTodos: (todos: Todo[]) => void;
+    addTodo: (
+        id: string,
+        title: string,
+        text: string,
+        priority?: Priority
+    ) => void;
+    removeTodo: (id: string) => void;
+    editTodo: (
+        id: string,
+        title: string,
+        text: string,
+        priority?: Priority
+    ) => void;
+    toggleTodo: (id: string) => void;
+}

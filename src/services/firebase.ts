@@ -1,5 +1,12 @@
 import { db } from '@/lib/firebase';
-import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
+import {
+    collection,
+    getDocs,
+    addDoc,
+    updateDoc,
+    deleteDoc,
+    doc
+} from 'firebase/firestore';
 import type { Priority, Todo } from '@/types';
 
 const TODOS_COLLECTION = import.meta.env.VITE_FIRESTORE_COLLECTION || 'todos';
@@ -15,7 +22,11 @@ export async function fetchTodosFromDb(): Promise<Todo[]> {
     );
 }
 
-export async function createTodoInDb(title: string, text: string, priority: Priority = 'medium'): Promise<string> {
+export async function createTodoInDb(
+    title: string,
+    text: string,
+    priority: Priority = 'medium'
+): Promise<string> {
     const docRef = await addDoc(collection(db, TODOS_COLLECTION), {
         title,
         text,
@@ -26,7 +37,10 @@ export async function createTodoInDb(title: string, text: string, priority: Prio
     return docRef.id;
 }
 
-export async function updateTodoInDb(id: string, data: Partial<Todo>): Promise<void> {
+export async function updateTodoInDb(
+    id: string,
+    data: Partial<Todo>
+): Promise<void> {
     await updateDoc(doc(db, TODOS_COLLECTION, id), data);
 }
 

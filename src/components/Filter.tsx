@@ -1,5 +1,5 @@
-import { Button } from '@/components/ui/button';
 import type { FilterProps } from '@/types';
+import { Button } from '@/components/ui/button';
 
 export function Filter({ filter, onChange }: FilterProps) {
     return (

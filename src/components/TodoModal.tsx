@@ -1,9 +1,15 @@
 import { useEffect, useState } from 'react';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 import type { Priority, TodoModalProps } from '@/types';
 
-export function TodoModal({ todo, isOpen, onClose, onSave, mode }: TodoModalProps) {
+export function TodoModal({
+    todo,
+    isOpen,
+    onClose,
+    onSave,
+    mode
+}: TodoModalProps) {
     const [title, setTitle] = useState('');
     const [text, setText] = useState('');
     const [priority, setPriority] = useState<Priority>('medium');
@@ -62,7 +68,9 @@ export function TodoModal({ todo, isOpen, onClose, onSave, mode }: TodoModalProp
                         <div className="flex gap-2">
                             <Button
                                 type="button"
-                                variant={priority === 'high' ? 'default' : 'outline'}
+                                variant={
+                                    priority === 'high' ? 'default' : 'outline'
+                                }
                                 size="sm"
                                 onClick={() => setPriority('high')}
                                 className="flex-1 bg-red-500 hover:bg-red-600"
@@ -71,7 +79,11 @@ export function TodoModal({ todo, isOpen, onClose, onSave, mode }: TodoModalProp
                             </Button>
                             <Button
                                 type="button"
-                                variant={priority === 'medium' ? 'default' : 'outline'}
+                                variant={
+                                    priority === 'medium'
+                                        ? 'default'
+                                        : 'outline'
+                                }
                                 size="sm"
                                 onClick={() => setPriority('medium')}
                                 className="flex-1 bg-yellow-500 hover:bg-yellow-600"
@@ -80,7 +92,9 @@ export function TodoModal({ todo, isOpen, onClose, onSave, mode }: TodoModalProp
                             </Button>
                             <Button
                                 type="button"
-                                variant={priority === 'low' ? 'default' : 'outline'}
+                                variant={
+                                    priority === 'low' ? 'default' : 'outline'
+                                }
                                 size="sm"
                                 onClick={() => setPriority('low')}
                                 className="flex-1 bg-green-500 hover:bg-green-600"
@@ -95,7 +109,9 @@ export function TodoModal({ todo, isOpen, onClose, onSave, mode }: TodoModalProp
                     <Button variant="ghost" onClick={onClose}>
                         Cancel
                     </Button>
-                    <Button onClick={handleSave}>{mode === 'add' ? 'Add' : 'Save'}</Button>
+                    <Button onClick={handleSave}>
+                        {mode === 'add' ? 'Add' : 'Save'}
+                    </Button>
                 </div>
             </div>
         </div>

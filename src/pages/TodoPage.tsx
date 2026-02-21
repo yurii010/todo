@@ -1,41 +1,45 @@
+import type { Priority } from '@/types';
+import { Stats } from '@/components/Stats';
 import { useTodos } from '@/hooks/useTodos';
-import { TodoCard } from '@/components/TodoCard';
-import { TodoModal } from '@/components/TodoModal';
+import { Loader2, Plus } from 'lucide-react';
 import { Search } from '@/components/Search';
 import { Filter } from '@/components/Filter';
-import { PriorityFilter } from '@/components/PriorityFilter';
-import { Stats } from '@/components/Stats';
-import { DailyGoal } from '@/components/DailyGoal';
-import { Loader2, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import type { Priority } from '@/types';
+import { TodoCard } from '@/components/TodoCard';
+import { TodoModal } from '@/components/TodoModal';
+import { DailyGoal } from '@/components/DailyGoal';
+import { PriorityFilter } from '@/components/PriorityFilter';
 
 export function TodoPage() {
     const {
         todos,
+        stats,
+        error,
         filter,
-        setFilter,
-        searchQuery,
-        setSearchQuery,
-        priorityFilter,
-        setPriorityFilter,
+        isLoading,
         modalMode,
         editingTodo,
-        isLoading,
-        error,
+        searchQuery,
+        dailyProgress,
+        priorityFilter,
+        setFilter,
+        closeModal,
         addNewTodo,
         deleteTodo,
         updateTodo,
-        toggleComplete,
-        openEditModal,
         openAddModal,
-        closeModal,
-        stats,
-        dailyProgress,
-        setDailyGoal
+        setDailyGoal,
+        openEditModal,
+        setSearchQuery,
+        toggleComplete,
+        setPriorityFilter
     } = useTodos();
 
-    const handleSaveTodo = async (title: string, text: string, priority: Priority) => {
+    const handleSaveTodo = async (
+        title: string,
+        text: string,
+        priority: Priority
+    ) => {
         if (modalMode === 'add') {
             await addNewTodo(title, text, priority);
         } else if (editingTodo) {
