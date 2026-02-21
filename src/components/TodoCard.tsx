@@ -1,14 +1,8 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
+import type { TodoCardProps } from '@/types';
 import { Trash2, Edit, Check, Circle } from 'lucide-react';
-import type { Todo } from '@/types/todo';
-
-interface TodoCardProps {
-    todo: Todo;
-    onDelete: (id: string) => void;
-    onEdit: (todo: Todo) => void;
-    onToggle: (id: string) => void;
-}
+import { priorityColors, priorityBadges } from '@/constants';
 
 export function TodoCard({ todo, onDelete, onEdit, onToggle }: TodoCardProps) {
     const [isDeleting, setIsDeleting] = useState(false);
@@ -18,18 +12,6 @@ export function TodoCard({ todo, onDelete, onEdit, onToggle }: TodoCardProps) {
         setTimeout(() => {
             onDelete(todo.id);
         }, 200);
-    };
-
-    const priorityColors = {
-        high: 'border-l-red-500',
-        medium: 'border-l-yellow-500',
-        low: 'border-l-green-500'
-    };
-
-    const priorityBadges = {
-        high: 'bg-red-500 text-white',
-        medium: 'bg-yellow-500 text-black',
-        low: 'bg-green-500 text-white'
     };
 
     return (

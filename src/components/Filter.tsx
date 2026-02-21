@@ -1,11 +1,5 @@
 import { Button } from '@/components/ui/button';
-
-type FilterType = 'all' | 'active' | 'completed';
-
-interface FilterProps {
-    filter: FilterType;
-    onChange: (filter: FilterType) => void;
-}
+import type { FilterProps } from '@/types';
 
 export function Filter({ filter, onChange }: FilterProps) {
     return (

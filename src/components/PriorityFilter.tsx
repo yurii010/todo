@@ -1,9 +1,4 @@
-import type { Priority } from '@/types/todo';
-
-interface PriorityFilterProps {
-    priorityFilter: Priority | 'all';
-    onChange: (priority: Priority | 'all') => void;
-}
+import type { Priority, PriorityFilterProps } from '@/types';
 
 export function PriorityFilter({ priorityFilter, onChange }: PriorityFilterProps) {
     const buttons: { value: Priority | 'all'; label: string; color: string }[] = [

@@ -1,8 +1,4 @@
-interface StatsProps {
-    completed: number;
-    active: number;
-    productivity: number;
-}
+import type { StatsProps } from "@/types"
 
 export function Stats({ completed, active, productivity }: StatsProps) {
     return (

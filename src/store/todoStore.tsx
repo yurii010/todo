@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { Todo, Priority } from '@/types/todo';
+import type { Todo, Priority } from '@/types';
 
 interface TodoState {
     todos: Todo[];

@@ -1,15 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import type { Priority } from '@/types/todo';
-
-interface TodoModalProps {
-    todo: { title: string; text: string; priority?: Priority } | null;
-    isOpen: boolean;
-    onClose: () => void;
-    onSave: (title: string, text: string, priority: Priority) => void;
-    mode: 'add' | 'edit';
-}
+import type { Priority, TodoModalProps } from '@/types';
 
 export function TodoModal({ todo, isOpen, onClose, onSave, mode }: TodoModalProps) {
     const [title, setTitle] = useState('');

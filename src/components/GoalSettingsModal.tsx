@@ -1,11 +1,5 @@
 import { Button } from '@/components/ui/button';
-
-interface GoalSettingsModalProps {
-    isOpen: boolean;
-    onClose: () => void;
-    currentGoal: number;
-    onSave: (goal: number) => void;
-}
+import type { GoalSettingsModalProps } from "@/types";
 
 export function GoalSettingsModal({
     isOpen,

@@ -8,7 +8,7 @@ import { Stats } from '@/components/Stats';
 import { DailyGoal } from '@/components/DailyGoal';
 import { Loader2, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import type { Priority } from '@/types/todo';
+import type { Priority } from '@/types';
 
 export function TodoPage() {
     const {

@@ -1,15 +1,8 @@
 import { useState } from 'react';
-import { Settings2, Trophy } from 'lucide-react';
+import type { DailyGoalProps } from '@/types';
 import { Button } from '@/components/ui/button';
+import { Settings2, Trophy } from 'lucide-react';
 import { GoalSettingsModal } from './GoalSettingsModal';
-
-interface DailyGoalProps {
-    completedToday: number;
-    dailyGoal: number;
-    progress: number;
-    isGoalReached: boolean;
-    onSetGoal: (goal: number) => void;
-}
 
 export function DailyGoal({
     completedToday,
@@ -48,11 +41,10 @@ export function DailyGoal({
 
                 <div className="relative h-3 w-full overflow-hidden rounded-full bg-muted">
                     <div
-                        className={`absolute left-0 top-0 h-full transition-all duration-500 ${
-                            isGoalReached
-                                ? 'bg-gradient-to-r from-yellow-400 to-yellow-500'
-                                : 'bg-gradient-to-r from-blue-500 to-blue-600'
-                        }`}
+                        className={`absolute left-0 top-0 h-full transition-all duration-500 ${isGoalReached
+                            ? 'bg-gradient-to-r from-yellow-400 to-yellow-500'
+                            : 'bg-gradient-to-r from-blue-500 to-blue-600'
+                            }`}
                         style={{ width: `${progress}%` }}
                     />
                 </div>

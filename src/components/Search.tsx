@@ -1,11 +1,6 @@
+import type { SearchProps } from '@/types';
 import { Input } from '@/components/ui/input';
 import { Search as SearchIcon } from 'lucide-react';
-
-interface SearchProps {
-    value: string;
-    onChange: (value: string) => void;
-    placeholder?: string;
-}
 
 export function Search({ value, onChange, placeholder = 'Search todos...' }: SearchProps) {
     return (

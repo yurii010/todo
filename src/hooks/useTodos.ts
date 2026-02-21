@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import useTodoStore, { selectTodos } from '@/store/todoStore';
-import type { Todo, Priority } from '@/types/todo';
+import type { Todo, Priority } from '@/types';
 import {
     fetchTodosFromDb,
     createTodoInDb,
