@@ -58,19 +58,23 @@ npm run dev
 ## ✨ Features
 
 ### Core
-- ✅ Add, edit, delete todos
-- ✅ Mark todos as complete
-- ✅ Real-time sync with Firebase Firestore
-- ✅ Smooth animations (slide in/out)
-- ✅ Dark mode support
-- ✅ Responsive design (mobile-first)
-- ✅ Search & filter (All / Active / Completed)
+- ✅ **Add, edit, delete todos** — Manage your tasks with ease
+- ✅ **Mark as complete** — Check off tasks when done
+- ✅ **Filter** — Quickly find tasks by status or priorities (All / Active / Completed, All / High / Medium / Low)
+- ✅ **Search by text** — Search through todo titles and descriptions
+- ✅ **Cloud sync** — Your todos are saved to Firebase and sync across devices
+- ✅ **Mobile-friendly** — Works great on any screen size
 
 ### Smart Productivity
-- 🎯 **Daily Goal** — Set a daily target (1-10 tasks) and track progress with a visual progress bar
-- 📊 **Stats Dashboard** — View completed, active tasks, and productivity percentage
-- 🏆 **Goal Celebration** — Get a trophy when you reach your daily goal
-- ⚙️ **Customizable Goals** — Adjust your daily target anytime via settings modal
+- 🎯 **Daily Goal** — Set a target for how many tasks you want to complete each day. Your goal is saved automatically and persists between sessions
+- 📊 **Progress Tracking** — Watch a visual progress bar fill up as you complete tasks
+- 📈 **Stats Dashboard** — See your completed tasks, pending tasks, and productivity percentage at a glance
+- ⚙️ **Flexible Settings** — Change your daily goal anytime (1-10 tasks) via the settings modal
+- 🎨 **Priority Levels** — Assign High, Medium, or Low priority to tasks with color-coded badges
+
+### Data Storage
+- 💾 **Todos** — Stored securely in Firebase Firestore
+- 🎯 **Daily Goal** — Stored locally in your browser's localStorage
 
 ## 📁 Project Structure
 
