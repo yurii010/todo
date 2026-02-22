@@ -1,7 +1,5 @@
 import { useMemo, useState } from 'react';
-import type { Todo, Priority } from '@/types';
-
-type FilterType = 'all' | 'active' | 'completed';
+import type { Todo, Priority, FilterType } from '@/types';
 
 interface UseTodoFiltersProps {
     todos: Todo[];

@@ -4,6 +4,12 @@ import { Slot } from 'radix-ui';
 
 import { cn } from '@/lib/utils';
 
+const priorityColors = {
+    high: 'bg-red-500 text-white hover:bg-red-600',
+    medium: 'bg-yellow-500 text-black hover:bg-yellow-600',
+    low: 'bg-green-500 text-white hover:bg-green-600'
+} as const;
+
 const buttonVariants = cva(
     "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
     {
@@ -16,7 +22,10 @@ const buttonVariants = cva(
                     'border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50',
                 secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
                 ghost: 'hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50',
-                link: 'text-primary underline-offset-4 hover:underline'
+                link: 'text-primary underline-offset-4 hover:underline',
+                priorityHigh: priorityColors.high,
+                priorityMedium: priorityColors.medium,
+                priorityLow: priorityColors.low
             },
             size: {
                 default: 'h-9 px-4 py-2 has-[>svg]:px-3',
@@ -36,27 +45,71 @@ const buttonVariants = cva(
     }
 );
 
+type ButtonProps = React.ComponentProps<'button'> &
+    VariantProps<typeof buttonVariants> & {
+        asChild?: boolean;
+        isLoading?: boolean;
+        'aria-label'?: string;
+    };
+
 function Button({
     className,
     variant = 'default',
     size = 'default',
     asChild = false,
+    isLoading = false,
+    disabled,
+    'aria-label': ariaLabel,
+    children,
     ...props
-}: React.ComponentProps<'button'> &
-    VariantProps<typeof buttonVariants> & {
-        asChild?: boolean;
-    }) {
+}: ButtonProps) {
     const Comp = asChild ? Slot.Root : 'button';
+    const isDisabled = disabled || isLoading;
+
+    const classNames = React.useMemo(
+        () => cn(buttonVariants({ variant, size, className })),
+        [variant, size, className]
+    );
 
     return (
         <Comp
             data-slot="button"
             data-variant={variant}
             data-size={size}
-            className={cn(buttonVariants({ variant, size, className }))}
+            className={classNames}
+            disabled={isDisabled}
+            aria-label={ariaLabel}
+            aria-busy={isLoading || undefined}
             {...props}
-        />
+        >
+            {isLoading && (
+                <svg
+                    className="animate-spin h-4 w-4 shrink-0"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                >
+                    <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                    />
+                    <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    />
+                </svg>
+            )}
+            {children}
+        </Comp>
     );
 }
 
 export { Button, buttonVariants };
+export type { ButtonProps };
+export { priorityColors };

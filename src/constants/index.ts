@@ -1,4 +1,4 @@
-export const priorityColors = {
+export const priorityBorderColors = {
     high: 'border-l-red-500',
     medium: 'border-l-yellow-500',
     low: 'border-l-green-500'

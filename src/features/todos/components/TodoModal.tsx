@@ -62,28 +62,28 @@ export function TodoModal({ todo, isOpen, onClose, onSave, mode }: TodoModalProp
                         <div className="flex gap-2">
                             <Button
                                 type="button"
-                                variant={priority === 'high' ? 'default' : 'outline'}
+                                variant={priority === 'high' ? 'priorityHigh' : 'outline'}
                                 size="sm"
                                 onClick={() => setPriority('high')}
-                                className="flex-1 bg-red-500 hover:bg-red-600"
+                                className="flex-1"
                             >
                                 High
                             </Button>
                             <Button
                                 type="button"
-                                variant={priority === 'medium' ? 'default' : 'outline'}
+                                variant={priority === 'medium' ? 'priorityMedium' : 'outline'}
                                 size="sm"
                                 onClick={() => setPriority('medium')}
-                                className="flex-1 bg-yellow-500 hover:bg-yellow-600"
+                                className="flex-1"
                             >
                                 Medium
                             </Button>
                             <Button
                                 type="button"
-                                variant={priority === 'low' ? 'default' : 'outline'}
+                                variant={priority === 'low' ? 'priorityLow' : 'outline'}
                                 size="sm"
                                 onClick={() => setPriority('low')}
-                                className="flex-1 bg-green-500 hover:bg-green-600"
+                                className="flex-1"
                             >
                                 Low
                             </Button>

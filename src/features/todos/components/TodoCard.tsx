@@ -2,7 +2,7 @@ import { useState } from 'react';
 import type { TodoCardProps } from '@/types';
 import { Button } from '@/components/ui/button';
 import { Trash2, Edit, Check, Circle } from 'lucide-react';
-import { priorityColors, priorityBadges } from '@/constants';
+import { priorityBorderColors, priorityBadges } from '@/constants';
 
 export function TodoCard({ todo, onDelete, onEdit, onToggle }: TodoCardProps) {
     const [isDeleting, setIsDeleting] = useState(false);
@@ -16,7 +16,7 @@ export function TodoCard({ todo, onDelete, onEdit, onToggle }: TodoCardProps) {
 
     return (
         <div
-            className={`rounded-lg border bg-card text-card-foreground p-4 shadow-sm hover:shadow-md transition-all border-l-4 ${priorityColors[todo.priority]} ${isDeleting ? 'animate-slide-out' : 'animate-slide-in'}`}
+            className={`rounded-lg border bg-card text-card-foreground p-4 shadow-sm hover:shadow-md transition-all border-l-4 ${priorityBorderColors[todo.priority]} ${isDeleting ? 'animate-slide-out' : 'animate-slide-in'}`}
         >
             <div className="flex items-start justify-between gap-3">
                 <div className="flex-1 space-y-1 min-w-0">
