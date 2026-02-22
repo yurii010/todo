@@ -8,8 +8,7 @@ import {
 } from '@/services/firebase';
 
 export const useTodoActions = () => {
-    const { setTodos, addTodo, removeTodo, editTodo, toggleTodo } =
-        useTodoStore();
+    const { setTodos, addTodo, removeTodo, editTodo, toggleTodo } = useTodoStore();
     const todos = useTodoStore(selectTodos);
 
     const loadTodos = async () => {
@@ -17,11 +16,7 @@ export const useTodoActions = () => {
         setTodos(fetchedTodos);
     };
 
-    const addNewTodo = async (
-        title: string,
-        text: string,
-        priority: Priority = 'medium'
-    ) => {
+    const addNewTodo = async (title: string, text: string, priority: Priority = 'medium') => {
         if (!title.trim()) return;
         const id = await createTodoInDb(title, text, priority);
         addTodo(id, title, text, priority);
@@ -32,12 +27,7 @@ export const useTodoActions = () => {
         removeTodo(id);
     };
 
-    const updateTodo = async (
-        id: string,
-        title: string,
-        text: string,
-        priority: Priority
-    ) => {
+    const updateTodo = async (id: string, title: string, text: string, priority: Priority) => {
         await updateTodoInDb(id, { title, text, priority });
         editTodo(id, title, text, priority);
     };

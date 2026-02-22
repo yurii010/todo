@@ -62,10 +62,7 @@ export function TodoListView() {
 
             <div className="flex flex-col gap-2 sm:flex-row sm:justify-between">
                 <Filter filter={filter} onChange={setFilter} />
-                <PriorityFilter
-                    priorityFilter={priorityFilter}
-                    onChange={setPriorityFilter}
-                />
+                <PriorityFilter priorityFilter={priorityFilter} onChange={setPriorityFilter} />
             </div>
 
             <Stats

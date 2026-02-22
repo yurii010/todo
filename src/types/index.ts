@@ -71,18 +71,8 @@ export interface DailyGoalState {
 export interface TodoState {
     todos: Todo[];
     setTodos: (todos: Todo[]) => void;
-    addTodo: (
-        id: string,
-        title: string,
-        text: string,
-        priority?: Priority
-    ) => void;
+    addTodo: (id: string, title: string, text: string, priority?: Priority) => void;
     removeTodo: (id: string) => void;
-    editTodo: (
-        id: string,
-        title: string,
-        text: string,
-        priority?: Priority
-    ) => void;
+    editTodo: (id: string, title: string, text: string, priority?: Priority) => void;
     toggleTodo: (id: string) => void;
 }

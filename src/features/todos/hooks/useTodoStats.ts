@@ -11,8 +11,7 @@ export const useTodoStats = ({ todos, dailyGoal }: UseTodoStatsProps) => {
         const completed = todos.filter((t) => t.isCompleted).length;
         const active = todos.filter((t) => !t.isCompleted).length;
         const total = todos.length;
-        const productivity =
-            total > 0 ? Math.round((completed / total) * 100) : 0;
+        const productivity = total > 0 ? Math.round((completed / total) * 100) : 0;
 
         return { completed, active, productivity };
     }, [todos]);
@@ -23,9 +22,7 @@ export const useTodoStats = ({ todos, dailyGoal }: UseTodoStatsProps) => {
         const todayStart = today.getTime();
 
         const completedToday = todos.filter((t) => {
-            return (
-                t.isCompleted && t.completedAt && t.completedAt >= todayStart
-            );
+            return t.isCompleted && t.completedAt && t.completedAt >= todayStart;
         }).length;
 
         const progress = Math.min((completedToday / dailyGoal) * 100, 100);

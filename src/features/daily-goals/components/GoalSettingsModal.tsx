@@ -27,9 +27,7 @@ export function GoalSettingsModal({
                     {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((goal) => (
                         <Button
                             key={goal}
-                            variant={
-                                currentGoal === goal ? 'default' : 'outline'
-                            }
+                            variant={currentGoal === goal ? 'default' : 'outline'}
                             size="sm"
                             onClick={() => handleSave(goal)}
                             className="aspect-square p-0"

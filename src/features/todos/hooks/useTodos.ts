@@ -12,16 +12,21 @@ export const useTodos = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    const { loadTodos, addNewTodo, deleteTodo, updateTodo, toggleComplete } =
-        useTodoActions();
+    const { loadTodos, addNewTodo, deleteTodo, updateTodo, toggleComplete } = useTodoActions();
 
-    const { filter, searchQuery, priorityFilter, filteredTodos, setFilter, setSearchQuery, setPriorityFilter } =
-        useTodoFilters({ todos });
+    const {
+        filter,
+        searchQuery,
+        priorityFilter,
+        filteredTodos,
+        setFilter,
+        setSearchQuery,
+        setPriorityFilter
+    } = useTodoFilters({ todos });
 
     const { stats, dailyProgress } = useTodoStats({ todos, dailyGoal });
 
-    const { modalMode, editingTodo, openAddModal, openEditModal, closeModal } =
-        useTodoModal();
+    const { modalMode, editingTodo, openAddModal, openEditModal, closeModal } = useTodoModal();
 
     useEffect(() => {
         const getTodos = async () => {
@@ -31,9 +36,7 @@ export const useTodos = () => {
                 await loadTodos();
             } catch (err) {
                 console.error('Failed to fetch todos:', err);
-                setError(
-                    err instanceof Error ? err.message : 'Failed to load todos'
-                );
+                setError(err instanceof Error ? err.message : 'Failed to load todos');
             } finally {
                 setIsLoading(false);
             }

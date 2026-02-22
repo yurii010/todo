@@ -10,16 +10,13 @@ interface UseTodoFiltersProps {
 export const useTodoFilters = ({ todos }: UseTodoFiltersProps) => {
     const [filter, setFilter] = useState<FilterType>('all');
     const [searchQuery, setSearchQuery] = useState('');
-    const [priorityFilter, setPriorityFilter] = useState<Priority | 'all'>(
-        'all'
-    );
+    const [priorityFilter, setPriorityFilter] = useState<Priority | 'all'>('all');
 
     const filteredTodos = useMemo(() => {
         return todos.filter((todo) => {
             if (filter === 'active' && todo.isCompleted) return false;
             if (filter === 'completed' && !todo.isCompleted) return false;
-            if (priorityFilter !== 'all' && todo.priority !== priorityFilter)
-                return false;
+            if (priorityFilter !== 'all' && todo.priority !== priorityFilter) return false;
 
             if (searchQuery.trim()) {
                 const query = searchQuery.toLowerCase();
