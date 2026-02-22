@@ -1,3 +1,5 @@
+export const DAILY_GOAL_STORAGE_KEY = 'dailyGoal';
+
 export const priorityBorderColors = {
     high: 'border-l-red-500',
     medium: 'border-l-yellow-500',
