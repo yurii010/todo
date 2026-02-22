@@ -8,7 +8,7 @@ A modern todo application with daily goals and productivity tracking. Built with
 - **UI:** Tailwind CSS v4, shadcn/ui components, Lucide icons
 - **Backend:** Firebase Firestore
 - **Build Tool:** Vite
-- **Code Quality:** ESLint + Prettier (4 spaces, single quotes, semicolons)
+- **Code Quality:** ESLint + Prettier
 
 ## 🚀 Quick Start
 
@@ -112,6 +112,7 @@ src/
 - **Quotes:** Single quotes `'`
 - **Semicolons:** Required `;`
 - **Formatter:** Prettier (auto-formats on save)
+- **Width:** Maximum 100 characters
 
 ## 🎯 How to Use Daily Goal
 
