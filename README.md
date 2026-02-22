@@ -80,26 +80,57 @@ npm run dev
 
 ```
 src/
-├── components/       # UI components
-│   ├── TodoCard.tsx
-│   ├── TodoModal.tsx
-│   ├── DailyGoal.tsx      # Daily goal tracker with progress bar
-│   ├── GoalSettingsModal.tsx  # Goal configuration modal
-│   ├── Stats.tsx          # Productivity statistics
-│   ├── Search.tsx
-│   ├── Filter.tsx
-│   └── ui/               # shadcn/ui components
-├── hooks/
-│   └── useTodos.ts       # Main todo logic & state
-├── pages/
-│   └── TodoPage.tsx      # Main page component
-├── services/
-│   └── firebase.ts       # Firebase CRUD operations
-├── store/
-│   └── todoStore.tsx     # Zustand store with dailyGoal state
-├── lib/
-│   └── firebase.ts       # Firebase initialization
-└── index.css             # Global styles and theme
+├── components/          # Shared UI components
+│   ├── common/          # Common components
+│   │   ├── Filter.tsx
+│   │   ├── PriorityFilter.tsx
+│   │   ├── Search.tsx
+│   │   └── Stats.tsx
+│   └── ui/              # shadcn/ui primitives
+│       ├── button.tsx
+│       ├── dialog.tsx
+│       └── input.tsx
+├── constants/           # App constants
+│   └── index.ts
+├── css/                 # Global styles
+│   └── index.css
+├── features/            # Feature-based modules
+│   ├── daily-goals/     # Daily goal feature
+│   │   ├── components/
+│   │   │   ├── DailyGoal.tsx
+│   │   │   └── GoalSettingsModal.tsx
+│   │   ├── hooks/
+│   │   │   └── useDailyGoal.ts
+│   │   ├── store/
+│   │   │   └── dailyGoalStore.ts
+│   │   └── index.ts
+│   └── todos/           # Todos feature
+│       ├── components/
+│       │   ├── TodoCard.tsx
+│       │   ├── TodoListView.tsx
+│       │   └── TodoModal.tsx
+│       ├── hooks/
+│       │   ├── index.ts
+│       │   ├── useTodoActions.ts
+│       │   ├── useTodoFilters.ts
+│       │   ├── useTodoModal.ts
+│       │   ├── useTodos.ts
+│       │   └── useTodoStats.ts
+│       ├── store/
+│       │   └── todoStore.tsx
+│       └── index.ts
+├── lib/                 # Utilities and configs
+│   ├── firebase.ts      # Firebase initialization
+│   ├── storage.ts       # LocalStorage utilities
+│   └── utils.ts         # Helper functions
+├── pages/               # Page components
+│   └── TodoPage.tsx
+├── services/            # API/Backend services
+│   └── firebase.ts      # Firebase CRUD operations
+├── types/               # TypeScript types
+│   └── index.ts
+├── App.tsx              # Root component
+└── main.tsx             # App entry point
 ```
 
 ## 🔥 Firebase Setup
@@ -124,8 +155,7 @@ src/
 2. Default goal is **3 tasks per day**
 3. Complete tasks by clicking the checkbox
 4. Watch the progress bar fill up
-5. Reach your goal to see the 🏆 trophy!
-6. Click ⚙️ to change your goal (1-10 tasks)
+5. Click ⚙️ to change your goal (1-10 tasks)
 
 ## 📊 Stats Explained
 
